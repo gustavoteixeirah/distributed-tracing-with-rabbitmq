@@ -1,0 +1,4 @@
+producer/target/**
+consumer/target/**
+producer/.idea
+consumer/.idea
