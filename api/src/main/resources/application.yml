@@ -1,0 +1,20 @@
+server:
+  port: 9090
+spring:
+  application:
+    name: api-server
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:admin}
+    password: ${RABBITMQ_PASSWORD:admin}
+
+filas:
+  proprietario: chakranet.jobs.proprietarios
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+tracing:
+  url: ${TRACING_URL:http://localhost:4317}
