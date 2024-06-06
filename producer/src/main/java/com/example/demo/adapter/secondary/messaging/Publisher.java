@@ -1,5 +1,9 @@
-package com.example.demo;
+package com.example.demo.adapter.secondary.messaging;
 
+import io.micrometer.observation.Observation;
+import io.micrometer.observation.ObservationRegistry;
+import io.micrometer.observation.aop.ObservedAspect;
+import io.opentelemetry.api.trace.Span;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.core.Queue;
@@ -29,6 +33,10 @@ public class Publisher {
                           "longitude": 23.2366
                         }
                 """;
+
+        Span span = Span.current();
+        span.setAttribute("message", message);
+
         rabbitTemplate.convertAndSend(queueProprietario.getName(), message);
         log.info("[x] Sent a message...thread{}", Thread.currentThread().getName());
     }

@@ -18,9 +18,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 
-@Configuration
+
 @EnableScheduling
-@EnableRabbit
 @SpringBootApplication
 public class ProducerApplication {
 
@@ -38,33 +37,5 @@ public class ProducerApplication {
         return builder.build();
     }
 
-    @Value("${filas.proprietario}")
-    String proprietarioQueueName;
 
-    @Bean
-    public Queue queueProprietario() {
-        return new Queue(proprietarioQueueName, true);
-    }
-
-    @Bean
-    RabbitTemplate rabbitTemplate(ConnectionFactory rabbitConnectionFactory) {
-        RabbitTemplate rabbitTemplate = new RabbitTemplate(rabbitConnectionFactory);
-        rabbitTemplate.setObservationEnabled(true);
-        return rabbitTemplate;
-    }
-
-    @Bean
-    public SimplePropertyValueConnectionNameStrategy cns() {
-        return new SimplePropertyValueConnectionNameStrategy("spring.application.name");
-    }
-
-    @Bean
-    public ConnectionFactory rabbitConnectionFactory(ConnectionNameStrategy cns) {
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
-        connectionFactory.setAddresses("localhost");
-        connectionFactory.setUsername("admin");
-        connectionFactory.setPassword("admin");
-        connectionFactory.setConnectionNameStrategy(cns);
-        return connectionFactory;
-    }
 }
